@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "411257627412",
+    "project_id": "jegyzet-app-firebase",
+    "storage_bucket": "jegyzet-app-firebase.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:411257627412:android:f76230809ceab2a34ed801",
+        "android_client_info": {
+          "package_name": "com.example.jegyzetapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCx2U14-fCkmpoBB9fyMVBicm-yoHR3xEI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

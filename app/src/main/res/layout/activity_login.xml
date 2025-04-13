@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollViewLogin"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="30dp"
+        android:layout_marginTop="75dp">
+
+        <!-- Bejelentkezés címsor -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Bejelentkezés"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:layout_marginBottom="16dp" />
+
+        <!-- E-mail mező -->
+        <EditText
+            android:id="@+id/etEmailLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="E-mail"
+            android:inputType="textEmailAddress" />
+
+        <!-- Jelszó mező -->
+        <EditText
+            android:id="@+id/etPasswordLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Jelszó"
+            android:inputType="textPassword"
+            android:layout_marginTop="12dp"
+            android:drawableEnd="@drawable/ic_eye"
+            android:drawablePadding="10dp"/>
+
+        <!-- Maradjon bejelentkezve checkbox -->
+        <CheckBox
+            android:id="@+id/cbStayLoggedIn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Maradjon bejelentkezve?"
+            android:layout_marginTop="12dp"/>
+
+        <!-- Bejelentkezés gomb -->
+        <Button
+            android:id="@+id/btnLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Bejelentkezés"
+            android:layout_marginTop="16dp"/>
+
+        <!-- Még nincs fiókod? Regisztráció link -->
+        <TextView
+            android:id="@+id/tvRegisterLink"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Még nincs fiókod? Regisztráció"
+            android:layout_marginTop="16dp"/>
+
+    </LinearLayout>
+</ScrollView>

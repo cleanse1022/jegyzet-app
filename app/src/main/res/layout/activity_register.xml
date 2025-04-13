@@ -1,0 +1,64 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollViewRegister"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="30dp"
+        android:layout_marginTop="75dp">
+
+        <!-- Bejelentkezés címsor -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Regisztráció"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:layout_marginBottom="16dp" />
+
+        <!-- E-mail mező -->
+        <EditText
+            android:id="@+id/etEmailRegister"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="E-mail"
+            android:inputType="textEmailAddress" />
+
+        <!-- Jelszó mező -->
+        <EditText
+            android:id="@+id/etPasswordRegister"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Jelszó"
+            android:inputType="textPassword"
+            android:layout_marginTop="12dp"
+            android:drawableEnd="@drawable/ic_eye"
+            android:drawablePadding="10dp" />
+
+        <!-- Jelszó megerősítése mező -->
+        <EditText
+            android:id="@+id/etPasswordConfirm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Jelszó megerősítése"
+            android:inputType="textPassword"
+            android:layout_marginTop="12dp"
+            android:drawableEnd="@drawable/ic_eye"
+            android:drawablePadding="10dp" />
+
+        <!-- Regisztráció gomb -->
+        <Button
+            android:id="@+id/btnRegister"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Regisztráció"
+            android:layout_marginTop="16dp" />
+
+    </LinearLayout>
+</ScrollView>

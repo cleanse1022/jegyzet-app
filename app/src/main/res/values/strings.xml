@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Jegyzetek</string>
+    <string name="add_note">Jegyzet hozzáadása</string>
+    <string name="note_title">Cím (Opcionális)</string>
+    <string name="note_content">Tartalom</string>
+    <string name="save_note">Mentés</string>
+</resources>

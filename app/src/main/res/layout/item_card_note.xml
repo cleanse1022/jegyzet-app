@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusable="true"
+    app:cardUseCompatPadding="true"
+    app:cardPreventCornerOverlap="true"
+    app:cardCornerRadius="16dp"
+    app:strokeWidth="1.5dp"
+    app:strokeColor="#7A18A2">
+
+<LinearLayout
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:padding="12dp"
+android:orientation="vertical">
+
+<!-- Cím -->
+<TextView
+    android:id="@+id/tvNoteTitle"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textStyle="bold"
+    android:textSize="23sp"
+    android:textColor="#888888" />
+
+<!-- Tartalom előnézete -->
+<TextView
+    android:id="@+id/tvNoteContent"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:maxLines="4"
+    android:ellipsize="end"
+    android:textSize="16sp"
+    android:textColor="#888888"
+    android:layout_marginTop="4dp" />
+
+<!-- Módosítás dátuma -->
+<TextView
+    android:id="@+id/tvNoteDate"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="end"
+    android:textColor="#cccccc"
+    android:textSize="12sp"
+    android:layout_marginTop="8dp" />
+
+</LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
