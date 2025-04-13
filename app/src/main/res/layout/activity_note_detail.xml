@@ -32,36 +32,34 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
 
-        app:boxBackgroundMode="filled"
-        app:boxCornerRadiusTopStart="12dp"
-        app:boxCornerRadiusTopEnd="12dp"
-        app:boxCornerRadiusBottomStart="12dp"
-        app:boxCornerRadiusBottomEnd="12dp"
+            app:boxBackgroundMode="filled"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusBottomEnd="12dp"
             app:boxBackgroundColor="#584B4848">
-
-        >
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etNoteTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="18sp"
-        android:textColor="@android:color/white"
-        android:hint="@string/note_title" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:textColor="@android:color/white"
+            android:hint="@string/note_title" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <!-- Jegyzet tartalom -->
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        <!-- Jegyzet tartalom -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
 
-        app:boxBackgroundMode="filled"
-        app:boxCornerRadiusTopStart="12dp"
-        app:boxCornerRadiusTopEnd="12dp"
-        app:boxCornerRadiusBottomStart="12dp"
-        app:boxCornerRadiusBottomEnd="12dp"
-        app:boxBackgroundColor="#594B4848">
+            app:boxBackgroundMode="filled"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxBackgroundColor="#594B4848">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etNoteContent"

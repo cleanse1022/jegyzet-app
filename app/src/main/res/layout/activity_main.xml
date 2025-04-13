@@ -1,55 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:fitsSystemWindows="true"
     android:padding="8dp"
     tools:context=".ui.MainActivity">
 
-    <!-- Kijelentkezés szöveg gombként, középre igazítva a tetején -->
+    <!-- Kijelentkezés szöveg gombként, középen -->
     <TextView
         android:id="@+id/btnLogout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Kijelentkezés"
-        android:textSize="15dp"
+        android:text="@string/logout"
+        android:textSize="15sp"
         android:textStyle="bold"
         android:padding="8dp"
         android:background="?attr/selectableItemBackground"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp" />
 
-    <!-- SearchView a képernyő tetején -->
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        android:layout_marginTop="15dp"/>
+
+    <!-- SearchView, a kijelentkezés gomb alatt -->
     <androidx.appcompat.widget.SearchView
         android:id="@+id/searchView"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Keresés..."
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="50dp"
-        android:layout_alignParentTop="true" />
+        android:hint="@string/search_hint"
+        android:layout_marginTop="16dp"
 
-    <!-- RecyclerView, ami a SearchView alá kerül -->
+        app:layout_constraintTop_toBottomOf="@+id/btnLogout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <!-- RecyclerView, amely kitölti a maradék helyet -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewNotes"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:padding="16dp"
-        android:layout_below="@id/searchView" />
+        android:contentDescription="@string/recycler_view_notes"
+        app:layout_constraintTop_toBottomOf="@+id/searchView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
-    <!-- FloatingActionButton a jobb alsó sarokban -->
+    <!-- FloatingActionButton jobb alsó sarokban -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAddNote"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_margin="35dp"
         android:contentDescription="@string/add_note"
         android:backgroundTint="#7A18A2"
-        android:src="@drawable/ic_add" />
+        android:src="@drawable/ic_add"
 
-</RelativeLayout>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="35dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

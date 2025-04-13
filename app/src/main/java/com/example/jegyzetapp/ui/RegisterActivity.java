@@ -34,20 +34,17 @@ public class RegisterActivity extends AppCompatActivity {
 
         Button btnRegister = findViewById(R.id.btnRegister);
 
-        // ***** Beállítjuk a jelszómezőn az OnTouchListener–t kívül a regisztráció gomb OnClickListener–én  *****
         etPassword.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 final int DRAWABLE_END = 2; // jobb oldali drawable indexe
                 if (event.getAction() == MotionEvent.ACTION_UP) {
-                    // Ha már beállítottad az XML-ben a drawable-t, akkor itt elvárjuk, hogy ne legyen null.
                     if (etPassword.getCompoundDrawablesRelative()[DRAWABLE_END] != null) {
                         int drawableWidth = etPassword.getCompoundDrawablesRelative()[DRAWABLE_END].getBounds().width();
                         if (event.getRawX() >= (etPassword.getRight() - drawableWidth - etPassword.getPaddingEnd())) {
                             isPasswordVisible = !isPasswordVisible;
                             if (isPasswordVisible) {
                                 etPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                                // Ha van külön ikond a látható állapothoz:
                                 etPassword.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_eye_visible, 0);
                             } else {
                                 etPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
@@ -62,7 +59,6 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-        // (Ha szeretnéd, a megerősítő jelszó mezőhöz is hasonló OnTouchListener-t adhatsz, de lehet, hogy külön kezelni szeretnéd.)
         etPasswordConfirm.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -71,7 +67,6 @@ public class RegisterActivity extends AppCompatActivity {
                     if (etPasswordConfirm.getCompoundDrawablesRelative()[DRAWABLE_END] != null) {
                         int drawableWidth = etPasswordConfirm.getCompoundDrawablesRelative()[DRAWABLE_END].getBounds().width();
                         if (event.getRawX() >= (etPasswordConfirm.getRight() - drawableWidth - etPasswordConfirm.getPaddingEnd())) {
-                            // Használhatsz külön logikát, vagy akár ugyanazt az állapotváltoztatást.
                             boolean isVisible = etPasswordConfirm.getTransformationMethod() instanceof HideReturnsTransformationMethod;
                             if (!isVisible) {
                                 etPasswordConfirm.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
@@ -107,7 +102,6 @@ public class RegisterActivity extends AppCompatActivity {
             auth.createUserWithEmailAndPassword(email, pass)
                     .addOnSuccessListener(authResult -> {
                         Toast.makeText(this, "Sikeres regisztráció!", Toast.LENGTH_SHORT).show();
-                        // Regisztráció után rögtön beléptet a user, mehetsz a MainActivity-be:
                         startActivity(new Intent(RegisterActivity.this, MainActivity.class));
                         finish();
                     })

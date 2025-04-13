@@ -16,7 +16,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Regisztráció"
+            android:text="@string/registration"
             android:gravity="center"
             android:textStyle="bold"
             android:textSize="20sp"
@@ -27,7 +27,7 @@
             android:id="@+id/etEmailRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="E-mail"
+            android:hint="@string/email"
             android:inputType="textEmailAddress" />
 
         <!-- Jelszó mező -->
@@ -35,7 +35,7 @@
             android:id="@+id/etPasswordRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Jelszó"
+            android:hint="@string/password"
             android:inputType="textPassword"
             android:layout_marginTop="12dp"
             android:drawableEnd="@drawable/ic_eye"
@@ -46,7 +46,7 @@
             android:id="@+id/etPasswordConfirm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Jelszó megerősítése"
+            android:hint="@string/confirm_password"
             android:inputType="textPassword"
             android:layout_marginTop="12dp"
             android:drawableEnd="@drawable/ic_eye"
@@ -57,7 +57,7 @@
             android:id="@+id/btnRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Regisztráció"
+            android:text="@string/registration"
             android:layout_marginTop="16dp" />
 
     </LinearLayout>

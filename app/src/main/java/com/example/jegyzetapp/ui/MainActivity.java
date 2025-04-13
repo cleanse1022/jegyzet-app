@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -83,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         RecyclerView recyclerView = findViewById(R.id.recyclerViewNotes);
+
         FloatingActionButton fabAdd = findViewById(R.id.fabAddNote);
         SearchView searchView = findViewById(R.id.searchView);
         searchView.setIconifiedByDefault(false);
@@ -232,6 +234,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void loadNotes() {
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        RecyclerView recyclerView = findViewById(R.id.recyclerViewNotes);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(noteAdapter);
+        recyclerView.setLayoutAnimation(AnimationUtils.loadLayoutAnimation(this, R.anim.layout_fall_down));
+
         if (currentUser != null) {
             String uid = currentUser.getUid();
             db.collection("notes")
@@ -250,6 +257,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                         originalNoteList.addAll(noteList);
                         noteAdapter.notifyDataSetChanged();
+                        recyclerView.scheduleLayoutAnimation();
 
                         // Ha volt keresési kifejezés, újraszűrjük
                         SearchView searchView = findViewById(R.id.searchView);

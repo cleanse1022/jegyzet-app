@@ -120,7 +120,6 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
             }
 
             itemView.setOnClickListener(v -> {
-                // Ha éppen van kijelölt elem, akkor többkijelölés lehetséges
                 if (!adapter.selectedIds.isEmpty()) {
                     adapter.toggleSelection(note);
                 } else {

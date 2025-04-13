@@ -35,7 +35,6 @@ public class NoteDetailActivity extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
 
-        // Ha van átadva noteId, akkor frissítési módú megnyitásról van szó
         if (getIntent().hasExtra("noteId")) {
             noteId = getIntent().getStringExtra("noteId");
             loadNoteData(noteId);
@@ -88,7 +87,7 @@ public class NoteDetailActivity extends AppCompatActivity {
         Note note = new Note();
         note.setTitle(title);
         note.setContent(content);
-        note.setCreationDate(new Date());  // A "creationDate" mezőt használjuk, ha ezen szűrsz a lekérdezéseknél
+        note.setCreationDate(new Date());
 
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser == null) {
@@ -97,12 +96,7 @@ public class NoteDetailActivity extends AppCompatActivity {
         }
 
         if (noteId == null) {
-            // Új jegyzet létrehozása: itt beállítjuk a uid-t a bejelentkezett felhasználónak megfelelően,
-            // illetve használhatunk FieldValue.serverTimestamp()-et is, ha pontos szerveridőt szeretnénk.
             note.setUid(currentUser.getUid());
-            // Ha a szerver oldali timestamp-et szeretnéd, akkor ezt a value-t is átadhatod:
-            // note.setCreationDate(null); majd a Firestore szabályaid szerint FieldValue.serverTimestamp()
-            // de itt most Date objektumot adunk meg.
             db.collection("notes")
                     .add(note)
                     .addOnSuccessListener(documentReference -> {

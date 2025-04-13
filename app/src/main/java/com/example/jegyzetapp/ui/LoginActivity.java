@@ -78,7 +78,6 @@ public class LoginActivity extends AppCompatActivity {
                             isPasswordVisible = !isPasswordVisible;
                             if (isPasswordVisible) {
                                 etPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                                // Ha van külön ikond a látható állapothoz:
                                 etPassword.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_eye_visible, 0);
                             } else {
                                 etPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());

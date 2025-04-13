@@ -4,4 +4,11 @@
     <string name="note_title">Cím (Opcionális)</string>
     <string name="note_content">Tartalom</string>
     <string name="save_note">Mentés</string>
+    <string name="logout">Kijelentkezés</string>
+    <string name="search_hint">Keresés...</string>
+    <string name="recycler_view_notes">Jegyzetek</string>
+    <string name="registration">Regisztráció</string>
+    <string name="email">E-mail</string>
+    <string name="password">Jelszó</string>
+    <string name="confirm_password">Jelszó megerősítése</string>
 </resources>
