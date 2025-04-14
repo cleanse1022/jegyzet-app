@@ -1,5 +1,6 @@
 package com.example.jegyzetapp.ui;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,12 +10,13 @@ import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.ActionMode;
 import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.app.AlertDialog;
 
 import com.example.jegyzetapp.R;
 import com.example.jegyzetapp.adapter.NoteAdapter;
@@ -34,26 +36,25 @@ import java.util.Set;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
+    private RecyclerView recyclerView;
     private NoteAdapter noteAdapter;
     private List<Note> noteList;
-    private List<Note> originalNoteList = new ArrayList<>();
+    private final List<Note> originalNoteList = new ArrayList<>();
     private FirebaseFirestore db;
     private ListenerRegistration notesListener;
+
     private ActionMode actionMode;
 
     private final ActionMode.Callback actionModeCallback = new ActionMode.Callback() {
-
         @Override
         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
             mode.getMenuInflater().inflate(R.menu.menu_action_mode, menu);
             return true;
         }
-
         @Override
         public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
             return false;
         }
-
         @Override
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
             if (item.getItemId() == R.id.action_delete) {
@@ -70,7 +71,6 @@ public class MainActivity extends AppCompatActivity {
             }
             return false;
         }
-
         @Override
         public void onDestroyActionMode(ActionMode mode) {
             noteAdapter.clearSelection();
@@ -83,33 +83,29 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        RecyclerView recyclerView = findViewById(R.id.recyclerViewNotes);
-
-        FloatingActionButton fabAdd = findViewById(R.id.fabAddNote);
-        SearchView searchView = findViewById(R.id.searchView);
-        searchView.setIconifiedByDefault(false);
-        searchView.setIconified(false);
-
+        // Kijelentkezés gomb
         TextView btnLogout = findViewById(R.id.btnLogout);
         btnLogout.setOnClickListener(v -> {
-            // Kijelentkezés
             FirebaseAuth.getInstance().signOut();
             getSharedPreferences("app_prefs", MODE_PRIVATE)
                     .edit()
                     .putBoolean("stayLoggedIn", false)
                     .apply();
-
             Toast.makeText(MainActivity.this, "Sikeres kijelentkezés", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
             finish();
         });
+
+        // SearchView
+        SearchView searchView = findViewById(R.id.searchView);
+        searchView.setIconifiedByDefault(false);
+        searchView.setIconified(false);
 
         searchView.setOnCloseListener(() -> {
             searchView.setQuery("", false);
             filterNotes("");
             return true;
         });
-
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -123,20 +119,29 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // RecyclerView
+        recyclerView = findViewById(R.id.recyclerViewNotes);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        // FloatingActionButton
+        FloatingActionButton fabAdd = findViewById(R.id.fabAddNote);
+        fabAdd.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, NoteDetailActivity.class)));
 
         noteList = new ArrayList<>();
         db = FirebaseFirestore.getInstance();
 
+        // NoteAdapter
         noteAdapter = new NoteAdapter(
                 noteList,
                 note -> {
+                    // Rövid kattintás: NoteDetailActivity
                     Intent intent = new Intent(MainActivity.this, NoteDetailActivity.class);
                     intent.putExtra("noteId", note.getId());
                     startActivity(intent);
                 },
                 this::deleteNote,
                 noteId -> {
+                    // Többkijelölés toggle
                     if (actionMode == null) {
                         actionMode = startSupportActionMode(actionModeCallback);
                     }
@@ -149,18 +154,21 @@ public class MainActivity extends AppCompatActivity {
 
         loadNotes();
 
-        fabAdd.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, NoteDetailActivity.class)));
+        if (savedInstanceState != null) {
+            String query = savedInstanceState.getString("query", "");
+            searchView.setQuery(query, false);
+        }
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         SearchView searchView = findViewById(R.id.searchView);
         outState.putString("query", searchView.getQuery().toString());
     }
 
     @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         String query = savedInstanceState.getString("query", "");
         SearchView searchView = findViewById(R.id.searchView);
@@ -168,10 +176,10 @@ public class MainActivity extends AppCompatActivity {
         filterNotes(query);
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     protected void onStart() {
         super.onStart();
-        // Valós idejű figyelés
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser != null) {
             String uid = currentUser.getUid();
@@ -215,6 +223,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private void filterNotes(String query) {
         List<Note> filteredList = new ArrayList<>();
         if (query == null || query.trim().isEmpty()) {
@@ -232,47 +241,48 @@ public class MainActivity extends AppCompatActivity {
         noteAdapter.notifyDataSetChanged();
     }
 
+    // Adatok egyszeri lekérése Firestore-ból + animáció
+    @SuppressLint("NotifyDataSetChanged")
     private void loadNotes() {
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        RecyclerView recyclerView = findViewById(R.id.recyclerViewNotes);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(noteAdapter);
+        if (currentUser == null) {
+            return;
+        }
+
+        // Induláskor rejtett
+        recyclerView.setVisibility(android.view.View.INVISIBLE);
+        // Animáció beállítása
         recyclerView.setLayoutAnimation(AnimationUtils.loadLayoutAnimation(this, R.anim.layout_fall_down));
 
-        if (currentUser != null) {
-            String uid = currentUser.getUid();
-            db.collection("notes")
-                    .whereEqualTo("uid", uid)
-                    .orderBy("creationDate", Query.Direction.DESCENDING)
-                    .get()
-                    .addOnSuccessListener(queryDocumentSnapshots -> {
-                        noteList.clear();
-                        originalNoteList.clear();
-                        for (DocumentSnapshot document : queryDocumentSnapshots.getDocuments()) {
-                            Note note = document.toObject(Note.class);
-                            if (note != null) {
-                                note.setId(document.getId());
-                                noteList.add(note);
-                            }
+        String uid = currentUser.getUid();
+        db.collection("notes")
+                .whereEqualTo("uid", uid)
+                .orderBy("creationDate", Query.Direction.DESCENDING)
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    noteList.clear();
+                    originalNoteList.clear();
+                    for (DocumentSnapshot document : queryDocumentSnapshots.getDocuments()) {
+                        Note note = document.toObject(Note.class);
+                        if (note != null) {
+                            note.setId(document.getId());
+                            noteList.add(note);
                         }
-                        originalNoteList.addAll(noteList);
-                        noteAdapter.notifyDataSetChanged();
-                        recyclerView.scheduleLayoutAnimation();
+                    }
+                    originalNoteList.addAll(noteList);
+                    noteAdapter.notifyDataSetChanged();
 
-                        // Ha volt keresési kifejezés, újraszűrjük
-                        SearchView searchView = findViewById(R.id.searchView);
-                        String query = searchView.getQuery().toString();
-                        if (!query.trim().isEmpty()) {
-                            filterNotes(query);
-                        }
-                    })
-                    .addOnFailureListener(e -> {
-                        Log.e(TAG, "Hiba a jegyzetek betöltésekor", e);
-                        Toast.makeText(MainActivity.this, "Hiba a jegyzetek betöltésekor: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                    });
-        }
+                    // Láthatóvá tesszük és elindítjuk az animációt
+                    recyclerView.setVisibility(android.view.View.VISIBLE);
+                    recyclerView.scheduleLayoutAnimation();
+                })
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, "Hiba a jegyzetek betöltésekor", e);
+                    Toast.makeText(MainActivity.this, "Hiba a jegyzetek betöltésekor: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                });
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private void deleteNote(Note note) {
         new AlertDialog.Builder(MainActivity.this)
                 .setTitle("Törlés megerősítése")
@@ -292,11 +302,11 @@ public class MainActivity extends AppCompatActivity {
                 .show();
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private void deleteSelectedNotes() {
         Set<String> selectedIds = noteAdapter.getSelectedIds();
-        if (selectedIds.isEmpty()) {
-            return;
-        }
+        if (selectedIds.isEmpty()) return;
+
         for (String id : selectedIds) {
             db.collection("notes").document(id)
                     .delete()
