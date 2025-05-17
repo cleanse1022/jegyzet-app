@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:fitsSystemWindows="true"
+    android:padding="8dp"
+    tools:context=".ui.NoteDetailActivity">
+
+    <!-- Bal oldali panel - Cím és gombok -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_marginEnd="8dp">
+
+        <!-- Cím -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:boxBackgroundMode="filled"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxBackgroundColor="#584B4848">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etNoteTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textColor="@android:color/white"
+                android:hint="@string/note_title" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Gomb konténer - Függőleges elrendezés -->  
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginTop="24dp">
+
+            <!-- Emlékeztető gomb -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSetReminder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/reminder"
+                android:layout_marginBottom="8dp"
+                android:backgroundTint="#FF9800"
+                android:textColor="@android:color/white"
+                app:icon="@android:drawable/ic_popup_reminder"
+                app:iconGravity="textStart" />
+
+            <!-- Megosztás gomb -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnShareNote"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/share"
+                android:layout_marginBottom="8dp"
+                android:backgroundTint="#2196F3"
+                android:textColor="@android:color/white"
+                app:icon="@android:drawable/ic_menu_share"
+                app:iconGravity="textStart" />
+
+            <!-- Mentés gomb -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSaveNote"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/save_note"
+                android:backgroundTint="#7A18A2"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Jobb oldali panel - Jegyzet tartalma -->
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        android:clipToPadding="false"
+        android:paddingBottom="16dp"
+        android:scrollbars="vertical"
+        android:layout_marginTop="16dp">
+
+        <!-- Jegyzet tartalom -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:boxBackgroundMode="filled"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxBackgroundColor="#594B4848">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etNoteContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="top"
+                android:inputType="textMultiLine"
+                android:minLines="10"
+                android:textSize="16sp"
+                android:textColor="@android:color/white"
+                android:hint="@string/note_content"/>
+        </com.google.android.material.textfield.TextInputLayout>
+    </ScrollView>
+</LinearLayout>
