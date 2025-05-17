@@ -12,6 +12,9 @@ import java.util.Calendar;
 
 /**
  * Segédosztály a jegyzet emlékeztető funkciók kezeléséhez
+ * 
+ * Ez az osztály teljes API-t biztosít az emlékeztetők kezeléséhez: létrehozáshoz és törléshez.
+ * Bár jelenleg nem minden metódus aktivan használt, ez a tervezés biztosítja a bővíthetőséget.
  */
 public class ReminderHelper {
     private static final String TAG = "ReminderHelper";
@@ -89,6 +92,9 @@ public class ReminderHelper {
     
     /**
      * Emlékeztető törlése
+     * 
+     * MEGJEGYZÉS: Ez a metódus jelenleg nincs használatban, de rendelkezésre áll a jövőbeli
+     * funkcióbővítésekhez, amely lehetővé tenni az emlékeztetők törlését felhasználói kezdeményezésre.
      *
      * @param context A kontextus
      * @param noteId A jegyzet azonosítója

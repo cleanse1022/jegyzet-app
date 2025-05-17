@@ -3,10 +3,8 @@ package com.example.jegyzetapp.util;
 import android.util.Log;
 
 import com.example.jegyzetapp.model.Note;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -26,6 +24,10 @@ public class FirestoreQueryHelper {
 
     /**
      * A mai napon létrehozott jegyzetek lekérdezése
+     * 
+     * MEGJEGYZÉS: Ez a metódus jelenleg nincs használatban, de rendelkezésre áll a jövőbeli
+     * funkcióbővítésekhez, ami lehetővé teszi a napi jegyzetek megjelenítését, 
+     * például egy naptár nézet vagy napi összefoglaló formájában.
      * 
      * @param userId A felhasználó azonosítója
      * @param callback Visszahívás a jegyzetek listájával
@@ -71,13 +73,16 @@ public class FirestoreQueryHelper {
     }
 
     /**
-     * Lapozott jegyzetek lekérdezése (paginálás implementációja)
-     * Egy adott limit szerint visszaadja a jegyzeteket, majd jelzi, hogy van-e még adat
+     * Oldalazás a jegyzetek között
+     * 
+     * MEGJEGYZÉS: Ez a metódus jelenleg nincs használatban, de rendelkezésre áll a jövőbeli
+     * funkcióbővítésekhez, ami lehetővé teszi a nagy mennyiségű adat hatékony kezelését 
+     * lapozási technikával, például korábbi jegyzetek megtekintésénél vagy végtelenített
+     * görgetésű megjelenítésnél.
      * 
      * @param userId A felhasználó azonosítója
-     * @param limit A jegyzetek maximális száma
-     * @param lastDocumentSnapshot Az utolsó jegyzet a lapozáshoz (null az első oldalhoz)
-     * @param callback Visszahívás a jegyzetek listájával és a következő lapozási ponttal
+     * @param lastVisible Az utolsó látható dokumentum
+     * @param callback Visszahívás a lapozott eredménnyel
      */
     public static void getPaginatedNotes(
             String userId, 
