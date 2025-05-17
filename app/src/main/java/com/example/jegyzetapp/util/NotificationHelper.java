@@ -65,7 +65,7 @@ public class NotificationHelper {
             notificationManager.notify(1, builder.build());
         } catch (SecurityException e) {
             // Hiányzó értesítési jogosultság esetén
-            android.util.Log.e("NotificationHelper", "Notification permission denied", e);
+            e.printStackTrace();
         }
     }
 }

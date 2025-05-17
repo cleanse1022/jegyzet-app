@@ -12,9 +12,6 @@ import java.util.Calendar;
 
 /**
  * Segédosztály a jegyzet emlékeztető funkciók kezeléséhez
- * 
- * Ez az osztály teljes API-t biztosít az emlékeztetők kezeléséhez: létrehozáshoz és törléshez.
- * Bár jelenleg nem minden metódus aktivan használt, ez a tervezés biztosítja a bővíthetőséget.
  */
 public class ReminderHelper {
     private static final String TAG = "ReminderHelper";
@@ -92,22 +89,36 @@ public class ReminderHelper {
     
     /**
      * Emlékeztető törlése
-     * 
-     * MEGJEGYZÉS: Ez a metódus jelenleg nincs használatban, de rendelkezésre áll a jövőbeli
-     * funkcióbővítésekhez, amely lehetővé tenni az emlékeztetők törlését felhasználói kezdeményezésre.
      *
      * @param context A kontextus
      * @param noteId A jegyzet azonosítója
      */
-    /**
-     * MEGJEGYZÉS: ez a metódus jelenleg nincs használva az alkalmazásban,
-     * de fontos része a teljes emlékeztető kezelési API-nak, amely a későbbi
-     * fejlesztésekhez lesz használva, például az emlékeztetők törléséhez.
-     */
-    @SuppressWarnings("all")
     public static void cancelReminder(Context context, String noteId) {
-        // A metódus megvalósítása ideiglenesen kikommentelve a kódtisztaság érdekében
-        // A tényleges implementáció akkor lesz visszaállítva, ha szükség lesz erre a funkcióra
-    }
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        
+        try {
+            Intent intent = new Intent(context, ReminderReceiver.class);
+            int requestCode;
+            if (noteId != null) {
+                requestCode = Math.abs(noteId.hashCode() % 100000);
+            } else {
+                return; // Nem lehet törölni azonosító nélkül
+            }
+            
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                    context,
+                    requestCode,
+                    intent,
+                    PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
+            );
+            
+            // Alarm törlése
+            alarmManager.cancel(pendingIntent);
+            pendingIntent.cancel();
+            
+            Log.d(TAG, "Emlékeztető törölve: " + noteId);
+        } catch (Exception e) {
+            Log.e(TAG, "Hiba az emlékeztető törlésekor", e);
+        }
     }
 }

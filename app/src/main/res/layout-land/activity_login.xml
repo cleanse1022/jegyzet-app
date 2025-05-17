@@ -29,8 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/email"
-            android:inputType="textEmailAddress"
-            android:autofillHints="emailAddress" />
+            android:inputType="textEmailAddress" />
 
         <!-- Jelszó mező -->
         <EditText
@@ -41,8 +40,7 @@
             android:inputType="textPassword"
             android:layout_marginTop="8dp"
             android:drawableEnd="@drawable/ic_eye"
-            android:drawablePadding="10dp"
-            android:autofillHints="password"/>
+            android:drawablePadding="10dp"/>
 
         <!-- Maradjon bejelentkezve checkbox -->
         <CheckBox
