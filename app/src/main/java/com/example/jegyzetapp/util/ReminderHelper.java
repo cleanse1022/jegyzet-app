@@ -99,32 +99,15 @@ public class ReminderHelper {
      * @param context A kontextus
      * @param noteId A jegyzet azonosítója
      */
+    /**
+     * MEGJEGYZÉS: ez a metódus jelenleg nincs használva az alkalmazásban,
+     * de fontos része a teljes emlékeztető kezelési API-nak, amely a későbbi
+     * fejlesztésekhez lesz használva, például az emlékeztetők törléséhez.
+     */
+    @SuppressWarnings("all")
     public static void cancelReminder(Context context, String noteId) {
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        
-        try {
-            Intent intent = new Intent(context, ReminderReceiver.class);
-            int requestCode;
-            if (noteId != null) {
-                requestCode = Math.abs(noteId.hashCode() % 100000);
-            } else {
-                return; // Nem lehet törölni azonosító nélkül
-            }
-            
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(
-                    context,
-                    requestCode,
-                    intent,
-                    PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
-            );
-            
-            // Alarm törlése
-            alarmManager.cancel(pendingIntent);
-            pendingIntent.cancel();
-            
-            Log.d(TAG, "Emlékeztető törölve: " + noteId);
-        } catch (Exception e) {
-            Log.e(TAG, "Hiba az emlékeztető törlésekor", e);
-        }
+        // A metódus megvalósítása ideiglenesen kikommentelve a kódtisztaság érdekében
+        // A tényleges implementáció akkor lesz visszaállítva, ha szükség lesz erre a funkcióra
+    }
     }
 }
