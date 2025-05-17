@@ -1,6 +1,13 @@
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+    
+    <!-- Értesítések küldéséhez szükséges engedély -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    
+    <!-- Pontos emlékeztetők beállításához szükséges engedélyek -->
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
 
     <application
         android:allowBackup="true"
@@ -43,6 +50,10 @@
             android:name=".ui.RegisterActivity"
             android:exported="true" />
 
+    <!-- Emlékeztető BroadcastReceiver -->
+        <receiver android:name=".util.ReminderReceiver" 
+                  android:exported="false" />
+                  
     </application>
 
 </manifest>

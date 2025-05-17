@@ -11,4 +11,7 @@
     <string name="email">E-mail</string>
     <string name="password">Jelszó</string>
     <string name="confirm_password">Jelszó megerősítése</string>
+    <string name="missing_account">Még nincs fiókod? Regisztráció</string>
+    <string name="login">Bejelentkezés</string>
+    <string name="stay_logged_in">Maradjon bejelentkezve?</string>
 </resources>

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -125,7 +126,13 @@ public class MainActivity extends AppCompatActivity {
 
         // FloatingActionButton
         FloatingActionButton fabAdd = findViewById(R.id.fabAddNote);
-        fabAdd.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, NoteDetailActivity.class)));
+        // FAB animáció hozzáadása
+        Animation bounceAnimation = AnimationUtils.loadAnimation(this, R.anim.button_bounce);
+        fabAdd.startAnimation(bounceAnimation);
+        fabAdd.setOnClickListener(view -> {
+            view.startAnimation(AnimationUtils.loadAnimation(this, R.anim.button_bounce));
+            startActivity(new Intent(MainActivity.this, NoteDetailActivity.class));
+        });
 
         noteList = new ArrayList<>();
         db = FirebaseFirestore.getInstance();
@@ -209,8 +216,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        loadNotes();
         SearchView searchView = findViewById(R.id.searchView);
+        String currentQuery = searchView.getQuery().toString();
+        
+        // Jegyzet adatok betöltése
+        loadNotes(currentQuery);
         searchView.clearFocus();
     }
 
@@ -244,6 +254,12 @@ public class MainActivity extends AppCompatActivity {
     // Adatok egyszeri lekérése Firestore-ból + animáció
     @SuppressLint("NotifyDataSetChanged")
     private void loadNotes() {
+        loadNotes("");
+    }
+    
+    // Adatok lekérése és szűrése egy lépésben
+    @SuppressLint("NotifyDataSetChanged")
+    private void loadNotes(String filterQuery) {
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser == null) {
             return;
@@ -270,7 +286,13 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                     originalNoteList.addAll(noteList);
-                    noteAdapter.notifyDataSetChanged();
+                    
+                    // Keresési szűrő alkalmazása, ha van
+                    if (filterQuery != null && !filterQuery.trim().isEmpty()) {
+                        filterNotes(filterQuery);
+                    } else {
+                        noteAdapter.notifyDataSetChanged();
+                    }
 
                     // Láthatóvá tesszük és elindítjuk az animációt
                     recyclerView.setVisibility(android.view.View.VISIBLE);
